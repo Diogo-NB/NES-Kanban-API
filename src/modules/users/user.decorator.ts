@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { User } from 'src/modules/users/user.inteface';
+import { User } from 'src/modules/users/user.interface';
 
 export const ReqUser = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
@@ -8,10 +8,6 @@ export const ReqUser = createParamDecorator(
         user: User;
       }
     >();
-    const user: User = {
-      id: request.user.id,
-      username: request.user.username,
-    };
-    return user;
+    return request.user;
   },
 );
