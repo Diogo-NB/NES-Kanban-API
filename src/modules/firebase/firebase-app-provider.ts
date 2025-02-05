@@ -6,6 +6,7 @@ import * as admin from 'firebase-admin';
 export class FirebaseAppProvider {
   readonly app: admin.app.App;
   readonly auth: admin.auth.Auth;
+  readonly firestore: admin.firestore.Firestore;
 
   constructor(configService: ConfigService) {
     const firebaseConfig = {
@@ -31,5 +32,6 @@ export class FirebaseAppProvider {
     });
 
     this.auth = this.app.auth();
+    this.firestore = this.app.firestore();
   }
 }

@@ -2,9 +2,15 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
+import { ColumnModule } from './modules/column/column.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, ConfigModule.forRoot({ cache: true })],
+  imports: [
+    AuthModule,
+    UsersModule,
+    ConfigModule.forRoot({ cache: true }),
+    ColumnModule,
+  ],
   controllers: [],
   providers: [],
 })
