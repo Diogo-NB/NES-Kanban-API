@@ -1,4 +1,4 @@
-export class Column {
+export class Tab {
   id: string;
   title: string;
   order: number;
@@ -13,12 +13,12 @@ export class Column {
     doc:
       | FirebaseFirestore.QueryDocumentSnapshot
       | FirebaseFirestore.DocumentSnapshot,
-  ): Column {
+  ): Tab {
     if (!doc.exists) {
       throw new Error(`Document with id ${doc.id} does not exist`);
     }
 
-    return new Column(
+    return new Tab(
       doc.id,
       doc.get('title') as string,
       doc.get('order') as number,
