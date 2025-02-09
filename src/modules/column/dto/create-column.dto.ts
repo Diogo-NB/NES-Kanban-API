@@ -1,4 +1,11 @@
+import { IsNotEmpty, IsPositive, IsOptional, IsString } from 'class-validator';
+
 export class CreateColumnDto {
-  title: string;
-  order?: number;
+  @IsString()
+  @IsNotEmpty()
+  title!: string;
+
+  @IsOptional()
+  @IsPositive()
+  order: number = 0;
 }

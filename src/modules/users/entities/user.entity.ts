@@ -4,10 +4,12 @@ export class User {
   readonly id: string;
   readonly email: string;
 
+  constructor(id: string, email: string) {
+    this.id = id;
+    this.email = email;
+  }
+
   static fromToken(decodedToken: DecodedIdToken): User {
-    return {
-      id: decodedToken.uid,
-      email: decodedToken.email!,
-    } as User;
+    return new User(decodedToken.uid, decodedToken.email!);
   }
 }

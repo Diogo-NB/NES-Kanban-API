@@ -2,16 +2,14 @@ export class Column {
   id: string;
   title: string;
   order: number;
-  tasks?: string[];
 
-  constructor(id: string, title: string, order: number, tasks?: string[]) {
+  constructor(id: string, title: string, order: number) {
     this.id = id;
     this.title = title;
     this.order = order;
-    this.tasks = tasks;
   }
 
-  static fromDoc(
+  static fromDocSnapshot(
     doc:
       | FirebaseFirestore.QueryDocumentSnapshot
       | FirebaseFirestore.DocumentSnapshot,
@@ -24,7 +22,6 @@ export class Column {
       doc.id,
       doc.get('title') as string,
       doc.get('order') as number,
-      doc.get('tasks') as string[] | undefined,
     );
   }
 }

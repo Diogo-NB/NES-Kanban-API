@@ -29,6 +29,8 @@ export default tseslint.config(
     rules: {
       "@typescript-eslint/require-await": "off",
       '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/unbound-method': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
       '@typescript-eslint/no-floating-promises': 'warn',
     },
   },

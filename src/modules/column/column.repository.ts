@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateColumnDto } from './dto/create-column.dto';
 import { FirebaseAppProvider } from 'src/modules/firebase/firebase-app-provider';
-import { Column } from './entities/column.entity';
+import { UpdateColumnDto } from './dto/update-column.dto';
 
 @Injectable()
 export class ColumnRepository {
@@ -11,36 +11,41 @@ export class ColumnRepository {
     this.collection = firebaseApp.firestore.collection('column-task');
   }
 
-  async create(userId: string, dto: CreateColumnDto) {
-    console.log('Creating column with data:', dto);
+  getCollection(userId: string) {
+    return this.collection.doc(userId).collection('columns');
+  }
 
-    const columnRef = this.collection.doc(userId).collection('columns').doc();
+  getDocRef(userId: string, columnId?: string) {
+    return columnId
+      ? this.getCollection(userId).doc(columnId)
+      : this.getCollection(userId).doc();
+  }
+
+  findOne(userId: string, columnId: string) {
+    return this.getDocRef(userId, columnId).get();
+  }
+
+  findAll(userId: string) {
+    return this.getCollection(userId).orderBy('order').get();
+  }
+
+  async create(userId: string, dto: CreateColumnDto) {
+    const columnRef = this.getDocRef(userId);
 
     await columnRef.set({
       title: dto.title,
       order: dto.order,
-      createdAt: new Date(),
     });
 
-    return columnRef.id;
+    return columnRef.get();
   }
 
-  async findAll(userId: string): Promise<Column[]> {
-    const snapshot = await this.collection
-      .doc(userId)
-      .collection('columns')
-      .get();
-
-    return snapshot.docs.map((doc) => Column.fromDoc(doc));
+  async update(userId: string, dto: UpdateColumnDto) {
+    const { id, ...updateData } = dto;
+    await this.getDocRef(userId, id).update(updateData);
   }
 
-  async findOne(userId: string, columnId: string): Promise<Column> {
-    const test = await this.collection
-      .doc(userId)
-      .collection('columns')
-      .doc(columnId)
-      .get();
-
-    return Column.fromDoc(test);
+  delete(userId: string, columnId: string) {
+    return this.getDocRef(userId, columnId).delete();
   }
 }
