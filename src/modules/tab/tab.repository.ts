@@ -32,10 +32,7 @@ export class TabRepository {
   async create(userId: string, dto: CreateTabDto) {
     const tabRef = this.getDocRef(userId);
 
-    await tabRef.set({
-      title: dto.title,
-      order: dto.order,
-    });
+    await tabRef.set({ ...dto });
 
     return tabRef.get();
   }

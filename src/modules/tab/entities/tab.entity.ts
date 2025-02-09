@@ -1,12 +1,16 @@
+import { TabIconEnum } from './tab-icon-enum';
+
 export class Tab {
   id: string;
   title: string;
   order: number;
+  icon?: TabIconEnum;
 
-  constructor(id: string, title: string, order: number) {
+  constructor(id: string, title: string, order: number, icon?: TabIconEnum) {
     this.id = id;
     this.title = title;
     this.order = order;
+    this.icon = icon;
   }
 
   static fromDocSnapshot(
@@ -22,6 +26,7 @@ export class Tab {
       doc.id,
       doc.get('title') as string,
       doc.get('order') as number,
+      doc.get('icon') as TabIconEnum | undefined,
     );
   }
 }

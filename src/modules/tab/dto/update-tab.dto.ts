@@ -1,4 +1,11 @@
-import { IsNotEmpty, IsOptional, IsPositive, IsString } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsPositive,
+  IsString,
+} from 'class-validator';
+import { TabIconEnum } from '../entities/tab-icon-enum';
 
 export class UpdateTabDto {
   @IsString()
@@ -13,4 +20,8 @@ export class UpdateTabDto {
   @IsOptional()
   @IsPositive()
   order?: number;
+
+  @IsOptional()
+  @IsEnum(TabIconEnum)
+  icon?: TabIconEnum;
 }
