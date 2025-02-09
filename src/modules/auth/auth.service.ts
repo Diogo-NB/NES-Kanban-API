@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { FirebaseAppProvider } from '../firebase/firebase-app-provider';
 import { User } from '../users/entities/user.entity';
 
@@ -11,15 +11,7 @@ export class AuthService {
       const decodedToken = await this.firebase.auth.verifyIdToken(token);
       return User.fromToken(decodedToken);
     } catch {
-      return new User(
-        'C51TyoOJrQWXVTj2x28MayHL4S62',
-        'diogo.nunes@estudante.iftm.edu.br',
-      ); // TODO - rollback
-      // return {
-      //   id: 'C51TyoOJrQWXVTj2x28MayHL4S62',
-      //   email: 'diogo.nunes@estudante.iftm.edu.br',
-      // } as User;
-      // throw new UnauthorizedException();
+      throw new UnauthorizedException();
     }
   }
 }
