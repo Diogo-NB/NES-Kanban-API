@@ -16,35 +16,31 @@ import { User } from '../users/entities/user.entity';
 import { UpdateTabDto } from './dto/update-tab.dto';
 
 @Controller('tab')
+@UseGuards(AuthGuard)
 export class TabController {
   constructor(private readonly tabService: TabService) {}
 
   @Post()
-  @UseGuards(AuthGuard)
   create(@ReqUser() user: User, @Body() dto: CreateTabDto) {
     return this.tabService.create(user.id, dto);
   }
 
   @Get()
-  @UseGuards(AuthGuard)
   findAll(@ReqUser() user: User) {
     return this.tabService.findAll(user.id);
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard)
   findOne(@ReqUser() user: User, @Param('id') id: string) {
     return this.tabService.findOne(user.id, id.trim());
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard)
   delete(@ReqUser() user: User, @Param('id') id: string) {
     return this.tabService.delete(user.id, id.trim());
   }
 
   @Patch()
-  @UseGuards(AuthGuard)
   update(@ReqUser() user: User, @Body() dto: UpdateTabDto) {
     return this.tabService.update(user.id, dto);
   }
